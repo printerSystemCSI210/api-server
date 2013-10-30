@@ -1,4 +1,5 @@
-api-server
-==========
+Printer API Server
+==================
 
-API server component
+Command Summary
+---------------
