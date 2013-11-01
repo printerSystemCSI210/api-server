@@ -18,3 +18,37 @@ Command Summary
 * `GET    /organizations/1/printers/2/statuses` — Gets a list of all status updates for the printer
 * `PUT    /organizations/1/printers/2/statuses` — Adds a new status entry for the printer
 * `GET    /organizations/1/printers/2/statuses/3` — Gets status `3` for the printer
+
+Database Structure
+------------------
+
+organization *document*
+* _id: auto-incremented
+* name: string
+* printers [printer\_id, printer\_id, ...]
+* users [user\_id, user\_id, ...]
+
+printer *document*
+* _id: auto-incremented
+* name: string
+* location: string
+* ipAddress: string
+* history [
+    {
+    * timeStamp: DateTime
+    * status: string
+    * pageCount: number
+    * tonerLevel: number
+    }
+    ...
+]
+* manufacturer: string
+* model: string
+
+user *document*
+* _id: auto-incremented
+* name: string
+* email: string
+* password: string (encrypted)
+* organization\_id
+* role: string (enum: admin, regular)
