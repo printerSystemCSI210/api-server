@@ -1,0 +1,28 @@
+{
+    "author": "Ben Burwell <ben@benburwell.com>",
+    "name": "forest-api-server",
+    "description": "The server component of the Forest API",
+    "version": "1.0.0",
+    "homepage": "",
+    "repository": {
+      "type": "",
+      "url": ""
+    },
+    "main": "app.js",
+    "keywords": "",
+    "engines": {
+      "node": ">=0.8.0"
+    },
+    "dependencies": {
+      "actionHero": "6.4.3",
+      "mongoose": "3.8.0",
+      "newrelic": "1.1.0"
+    },
+    "devDependencies": {},
+    "scripts": {
+      "start": "node ./node_modules/.bin/actionHero start",
+      "startCluster": "node ./node_modules/.bin/actionHero startCluster",
+      "actionHero": "node ./node_modules/.bin/actionHero",
+      "help": "node ./node_modules/.bin/actionHero help"
+    }
+}
