@@ -49,6 +49,7 @@ exports._project = function(api, next){
   mongoose.model('App', appSchema);
 
   api.mongoose = mongoose;
+  api.ObjectId = mongoose.Types.ObjectId;
 
   next();
 };
