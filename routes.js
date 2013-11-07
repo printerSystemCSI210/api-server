@@ -41,4 +41,31 @@ example:
 // ROUTES //
 ////////////
 
-exports.routes = {};
+exports.routes = {
+    get: [
+        // organizations
+        { path: '/organizations/:organizationId/printers', action: 'printerList' },
+        { path: '/organizations/:organizationId', action: 'organizationGet' },
+        { path: '/organizations', action: 'organizationList' },
+
+        // printers
+        { path: '/printers/:printerId/statuses', action: 'statusList' },
+        { path: '/printers/:printerId', action: 'printerGet' }
+    ],
+
+    post: [
+        { path: '/organizations/:organizationId/printers', action: 'printerCreate' },
+        { path: '/organizations', action: 'organizationCreate' },
+        { path: '/printers/:printerId/statuses', action: 'statusCreate' }
+    ],
+
+    put: [
+        { path: '/organizations/:organizationId', action: 'organizationUpdate' },
+        { path: '/printers/:printerId', action: 'printerUpdate' },
+    ],
+
+    delete: [
+        { path: '/organizations/:organizationId', action: 'organizationDelete' },
+        { path: '/printers/:printerId', action: 'printerDelete' },
+    ]
+};
