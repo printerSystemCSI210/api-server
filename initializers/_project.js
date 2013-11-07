@@ -1,10 +1,5 @@
 exports._project = function(api, next){
 
-  require('newrelic');
-
-  // modify / append the api global variable
-  // I will be run as part of actionHero's boot process
-
   var mongoose = require('mongoose');
 
   var uri = process.env.MONGOLAB_URI
