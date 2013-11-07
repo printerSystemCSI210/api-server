@@ -124,8 +124,8 @@ configData.servers = {
       maxFieldsSize: 1024 * 1024 * 100
     },
     metadataOptions: {                   // Options to configure metadata in responses
-      serverInformation: true,
-      requestorInformation: true
+      serverInformation: false,
+      requestorInformation: false
     },
     returnErrorCodes: false              // When true, returnErrorCodes will modify the response header for http(s) clients if connection.error is not null. You can also set connection.responseHttpCode to specify a code per request.
   },
