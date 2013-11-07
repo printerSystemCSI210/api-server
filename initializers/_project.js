@@ -17,7 +17,12 @@ exports._project = function(api, next){
       name: String,
       location: String,
       ipAddress: String,
-      statuses: [ mongoose.Schema.Types.ObjectId ],
+      statuses: [ {
+        timeStamp: Date,
+        status: String,
+        pageCount: Number,
+        tonerLevel: Number
+      } ],
       manufacturer: String,
       model: String
   };
@@ -27,13 +32,6 @@ exports._project = function(api, next){
       email: String,
       password: String,
       admin: Boolean
-  };
-
-  var statusSchema = {
-      timeStamp: Date,
-      status: String,
-      pageCount: Number,
-      tonerLevel: Number
   };
 
   var appSchema = {
@@ -48,10 +46,9 @@ exports._project = function(api, next){
   mongoose.model('Organization', orgSchema);
   mongoose.model('Printer', printerSchema);
   mongoose.model('User', userSchema);
-  mongoose.model('Status', statusSchema);
   mongoose.model('App', appSchema);
 
   api.mongoose = mongoose;
 
   next();
-}
+};
