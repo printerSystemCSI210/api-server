@@ -48,9 +48,13 @@ exports.routes = {
 
         // printers
         { path: '/organizations/:organizationId/printers/:printerId', action: 'printerGet' },
+        { path: '/organizations/:organizationId/printers', action: 'printerList' },
+
+        // users
+        { path: '/organizations/:organizationId/users/:userId', action: 'userGet'},
+        { path: '/organizations/:organizationId/users', action: 'userList' },
 
         // organizations
-        { path: '/organizations/:organizationId/printers', action: 'printerList' },
         { path: '/organizations/:organizationId', action: 'organizationGet' },
         { path: '/organizations', action: 'organizationList' }
     ],
@@ -62,6 +66,9 @@ exports.routes = {
         // printers
         { path: '/organizations/:organizationId/printers', action: 'printerCreate' },
 
+        // users
+        { path: '/organizations/:organizationId/users', action: 'userCreate' },
+
         // organizations
         { path: '/organizations', action: 'organizationCreate' }
     ],
@@ -70,12 +77,21 @@ exports.routes = {
         // printers
         { path: '/organizations/:organizationId/printers/:printerId', action: 'printerUpdate' },
 
+        // users
+        { path: 'organizations/:organizationId/users/:userId', action: 'userUpdate' },
+
         // organizations
-        { path: '/organizations/:organizationId', action: 'organizationUpdate' },
+        { path: '/organizations/:organizationId', action: 'organizationUpdate' }
     ],
 
     delete: [
+        // printers
         { path: '/organizations/:organizationId/printers/:printerId', action: 'printerDelete' },
-        { path: '/organizations/:organizationId', action: 'organizationDelete' },
+
+        // users
+        { path: '/organizations/:organizationId/users/:userId', action: 'userDelete' },
+
+        // organizations
+        { path: '/organizations/:organizationId', action: 'organizationDelete' }
     ]
 };

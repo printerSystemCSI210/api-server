@@ -21,11 +21,3 @@ Database Structure
 ------------------
 
 See [this file](https://github.com/printerSystemCSI210/api-server/blob/master/initializers/_project.js) for the current database structure
-
-`user` document
-* _id: auto-incremented
-* name: string
-* email: string
-* password: string (encrypted)
-* organization\_id
-* role: string (enum: admin, regular)
