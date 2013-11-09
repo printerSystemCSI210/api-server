@@ -16,13 +16,14 @@ exports.action = {
             email: connection.params.email,
             password: connection.params.password,
             admin: connection.params.admin
-        }).save(function (err, printer) {
+        }).save(function (err, user) {
             api.mongoose.model('Organization').findByIdAndUpdate(id, {
                 $push: {
                     users: user._id
                 }
-        }, function (err) {
-            next(connection, true);
-        });
+	        }, function (err) {
+	            next(connection, true);
+	        });
+	    });
     }
 };
