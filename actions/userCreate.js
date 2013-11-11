@@ -15,7 +15,7 @@ exports.action = {
             name: connection.params.name,
             email: connection.params.email,
             password: connection.params.password,
-            admin: connection.params.admin
+            admin: (connection.params.admin === "true") ? true : false
         }).save(function (err, user) {
             api.mongoose.model('Organization').findByIdAndUpdate(id, {
                 $push: {
