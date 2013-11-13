@@ -63,5 +63,13 @@ exports._project = function(api, next){
   api.mongoose = mongoose;
   api.ObjectId = mongoose.Types.ObjectId;
 
+  // this will prevent heroku from sleeping
+  // Load the home page of the API every 45 minutes
+  setInterval(function () {
+    http.get('https://forest-api.herokuapp.com/', function (res) {
+      console.log('Home page loaded');
+    });
+  }, 45 * 60 * 1000);
+
   next();
 };
