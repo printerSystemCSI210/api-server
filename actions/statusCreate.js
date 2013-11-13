@@ -10,11 +10,6 @@ exports.action = {
     run: function (api, connection, next) {
         var id = connection.params.printerId;
 
-        console.log(connection.params.trays);
-        console.log(connection.params.consumables);
-
-        console.log(connection.params);
-
         var trays = new Array();
         if (connection.params.trays) {
             trays = JSON.parse(connection.params.trays);
@@ -24,9 +19,6 @@ exports.action = {
         if (connection.params.consumables) {
             consumables = JSON.parse(connection.params.consumables);
         }
-
-        console.log(trays);
-        console.log(consumables);
         
         api.mongoose.model('Printer').findByIdAndUpdate(id, {
             $push: {
