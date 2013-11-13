@@ -9,7 +9,10 @@
       "url": ""
     },
     "main": "app.js",
-    "keywords": "",
+    "keywords": [
+      "forest",
+      "api"
+    ],
     "engines": {
       "node": ">=0.8.0"
     },
