@@ -4,7 +4,7 @@ exports.action = {
     version: 1,
     inputs: {
         required: [ 'name', 'organizationId' ],
-        optional: [ 'location', 'manufacturer', 'model', 'ipAddress' ]
+        optional: [ 'location', 'manufacturer', 'model', 'ipAddress', 'serial' ]
     },
     outputExample: {},
     run: function (api, connection, next) {
@@ -16,7 +16,8 @@ exports.action = {
             location: connection.params.location,
             manufacturer: connection.params.manufacturer,
             model: connection.params.model,
-            ipAddress: connection.params.ipAddress
+            ipAddress: connection.params.ipAddress,
+            serial: connection.params.serial
         }).save(function (err, printer) {
             api.mongoose.model('Organization').findByIdAndUpdate(id, {
                 $push: {

@@ -12,7 +12,8 @@ exports.action = {
         location: 'Room 201',
         manufacturer: 'Ricoh',
         model: 'ABC123',
-        ipAddress: '192.168.100.20'
+        ipAddress: '192.168.100.20',
+        serial: '12345ABCDE'
     },
     run: function (api, connection, next) {
         
@@ -30,6 +31,7 @@ exports.action = {
                     connection.response.manufacturer = res.manufacturer;
                     connection.response.model = res.model;
                     connection.response.ipAddress = res.ipAddress;
+                    connection.response.serial = res.serial;
                     next(connection, true);
                 } else {
                     next(connection, true);

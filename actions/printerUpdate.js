@@ -4,7 +4,7 @@ exports.action = {
     version: 1,
     inputs: {
         required: [ 'printerId' ],
-        optional: [ 'name', 'location', 'manufacturer', 'model', 'ipAddress' ]
+        optional: [ 'name', 'location', 'manufacturer', 'model', 'ipAddress', 'serial' ]
     },
     outputExample: {},
     run: function (api, connection, next) {
@@ -34,6 +34,10 @@ exports.action = {
                 
                 if (connection.params.ipAddress) {
                     res.ipAddress = connection.params.ipAddress;
+                }
+
+                if (connection.params.serial) {
+                    res.serial = connection.params.serial;
                 }
 
                 res.save();

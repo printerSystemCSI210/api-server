@@ -17,11 +17,23 @@ exports._project = function(api, next){
       name: String,
       location: String,
       ipAddress: String,
+      serial: String,
       statuses: [ {
         timeStamp: Date,
         status: String,
         pageCount: Number,
-        tonerLevel: Number
+        consumables: [ {
+          name: String,
+          level: Number,
+          capacity: Number,
+          percentage: Number
+        } ],
+        trays: [ {
+          name: String,
+          xdim: Number,
+          ydim: Number,
+          capacity: Number
+        } ]
       } ],
       manufacturer: String,
       model: String

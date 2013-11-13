@@ -14,7 +14,8 @@ exports.action = {
                 location: 'Room 201',
                 manufacturer: 'Ricoh',
                 model: 'ABC123',
-                ipAddress: '192.168.100.20'
+                ipAddress: '192.168.100.20',
+                serial: '12345ABCDE'
             }
         ]
     },
@@ -34,7 +35,8 @@ exports.action = {
                             location: r.location,
                             manufacturer: r.manufacturer,
                             model: r.model,
-                            ipAddress: r.ipAddress
+                            ipAddress: r.ipAddress,
+                            serial: r.serial
                         });
                     });
                 }
