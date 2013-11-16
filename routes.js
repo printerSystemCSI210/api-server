@@ -42,56 +42,11 @@ example:
 ////////////
 
 exports.routes = {
-    get: [
-        // statuses
-        { path: '/organizations/:organizationId/printers/:printerId/statuses', action: 'statusList' },
+    get: [],
 
-        // printers
-        { path: '/organizations/:organizationId/printers/:printerId', action: 'printerGet' },
-        { path: '/organizations/:organizationId/printers', action: 'printerList' },
+    post: [],
 
-        // users
-        { path: '/organizations/:organizationId/users/:userId', action: 'userGet'},
-        { path: '/organizations/:organizationId/users', action: 'userList' },
+    put: [],
 
-        // organizations
-        { path: '/organizations/:organizationId', action: 'organizationGet' },
-        { path: '/organizations', action: 'organizationList' }
-    ],
-
-    post: [
-        // statuses
-        { path: '/organizations/:organizationId/printers/:printerId/statuses', action: 'statusCreate' },
-
-        // printers
-        { path: '/organizations/:organizationId/printers', action: 'printerCreate' },
-
-        // users
-        { path: '/organizations/:organizationId/users', action: 'userCreate' },
-
-        // organizations
-        { path: '/organizations', action: 'organizationCreate' }
-    ],
-
-    put: [
-        // printers
-        { path: '/organizations/:organizationId/printers/:printerId', action: 'printerUpdate' },
-
-        // users
-        { path: 'organizations/:organizationId/users/:userId', action: 'userUpdate' },
-
-        // organizations
-        { path: '/organizations/:organizationId', action: 'organizationUpdate' }
-    ],
-
-    delete: [
-        // printers
-        { path: '/organizations/:organizationId/printers/:printerId', action: 'printerDelete' },
-
-        // users
-        { path: '/organizations/:organizationId/users/:userId', action: 'userDelete' },
-
-        // organizations
-        { path: '/organizations/:organizationId', action: 'organizationDelete' }
-    ]
+    delete: []
 };
