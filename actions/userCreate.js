@@ -17,11 +17,19 @@ exports.action = {
             password: connection.params.password,
             admin: (connection.params.admin === "true") ? true : false
         }).save(function (err, user) {
-            api.mongoose.model('Organization').findByIdAndUpdate(id, {
+            api.mongoose.model('User').findByIdAndUpdate(user._id, {
                 $push: {
-                    users: user._id
+                    organizations: id
                 }
-	        }, function (err) {
+	        }, function (err, user) {
+                if(user)
+                {
+                    connection.response.name = user.name;
+                    connection.response.email = user.email;
+                    connection.response.admin = user.admin;
+                    connection.response.organizations = user.organizations;
+                    connection.response.id = user._id;
+                }
 	            next(connection, true);
 	        });
 	    });

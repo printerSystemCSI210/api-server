@@ -9,7 +9,6 @@ exports._project = function(api, next){
   var orgSchema = {
       name: String,
       printers: [ mongoose.Schema.Types.ObjectId ],
-      users: [ mongoose.Schema.Types.ObjectId ],
       public: Boolean
   };
 
@@ -43,7 +42,8 @@ exports._project = function(api, next){
       name: String,
       email: String,
       password: String,
-      admin: Boolean
+      admin: Boolean,
+      organizations: [ mongoose.Schema.Types.ObjectId ]
   };
 
   var appSchema = {

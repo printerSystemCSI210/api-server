@@ -11,7 +11,12 @@ exports.action = {
         var Organization = api.mongoose.model('Organization');
         new Organization({
             name: connection.params.name
-        }).save(function (err) {
+        }).save(function (err, org) {
+            if(org)
+            {
+                connection.response.name = org.name;
+                connection.response.id = org._id;
+            }
             next(connection, true);
         });
     }
