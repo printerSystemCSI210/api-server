@@ -20,9 +20,14 @@ exports.action = {
                     res.name = connection.params.name;
                 }
 
-                res.save();
-                
-                next(connection, true);
+                res.save(function (err, org){
+                    if(org)
+                    {
+                        connection.response.name = org.name;
+                        connection.response.id = org._id;
+                    }
+                    next(connection, true);
+                });
             } else {
                 next(connection, true);
             }

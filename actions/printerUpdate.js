@@ -40,9 +40,19 @@ exports.action = {
                     res.serial = connection.params.serial;
                 }
 
-                res.save();
-                
-                next(connection, true);
+                res.save(function (err, printer){
+                    if(printer)
+                    {
+                        connection.response.name = printer.name;
+                        connection.response.location = printer.location;
+                        connection.response.manufacturer = printer.manufacturer;
+                        connection.response.model = printer.model;
+                        connection.response.ipAddress = printer.ipAddress;
+                        connection.response.serial = printer.serial;
+                        connection.response.id = printer._id;
+                    }
+                    next(connection, true);
+                });
             } else {
                 next(connection, true);
             }

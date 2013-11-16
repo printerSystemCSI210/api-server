@@ -30,12 +30,20 @@ exports.action = {
 
                 //Some check may be needed to ensure any user can't change admin status
                 if (connection.params.admin) {
-                    res.admin = connection.params.admin;
+                    res.admin = connection.params.admin === "true" ? true : false;
                 }
 
-                res.save();
-                
-                next(connection, true);
+                res.save(function (res, user){
+                    if(user)
+                    {
+                        connection.response.name = user.name;
+                        connection.response.email = user.email;
+                        connection.response.admin = user.admin;
+                        connection.response.organizations = user.organizations;
+                        connection.response.id = user._id;
+                    }
+                    next(connection, true);
+                });
             } else {
                 next(connection, true);
             }

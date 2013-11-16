@@ -20,7 +20,11 @@
       "actionHero": "6.4.3",
       "mongoose": "3.8.0"
     },
-    "devDependencies": {},
+    "devDependencies": {
+      "should": ">=2.1.0",
+      "request": "x",
+      "describe": "x"
+    },
     "scripts": {
       "start": "node ./node_modules/.bin/actionHero start",
       "startCluster": "node ./node_modules/.bin/actionHero startCluster",

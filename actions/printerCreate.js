@@ -19,6 +19,16 @@ exports.action = {
             ipAddress: connection.params.ipAddress,
             serial: connection.params.serial
         }).save(function (err, printer) {
+            if(printer)
+            {
+                connection.response.name = printer.name;
+                connection.response.location = printer.location;
+                connection.response.manufacturer = printer.manufacturer;
+                connection.response.model = printer.model;
+                connection.response.ipAddress = printer.ipAddress;
+                connection.response.serial = printer.serial;
+                connection.response.id = printer._id;
+            }
             api.mongoose.model('Organization').findByIdAndUpdate(id, {
                 $push: {
                     printers: printer._id
