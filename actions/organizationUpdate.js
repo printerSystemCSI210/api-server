@@ -6,7 +6,10 @@ exports.action = {
         required: [ 'organizationId' ],
         optional: [ 'name' ]
     },
-    outputExample: {},
+    outputExample: {
+        name: 'Large Town City Hall',
+        id: '123'
+    },
     run: function (api, connection, next) {
         
         // create the ID

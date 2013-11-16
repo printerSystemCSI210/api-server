@@ -6,7 +6,10 @@ exports.action = {
         required: [ 'name' ],
         optional: []
     },
-    outputExample: {},
+    outputExample: {
+        name: 'Small Town City Hall',
+        id: '123'
+    },
     run: function (api, connection, next) {
         var Organization = api.mongoose.model('Organization');
         new Organization({

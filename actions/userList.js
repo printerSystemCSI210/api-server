@@ -12,12 +12,14 @@ exports.action = {
                 name: 'Example Admin',
                 email: 'example@example.com',
                 admin: true,
+                organizations: ['456'],
                 id: '123'
             },
             {
                 name: 'Example Non-Admin',
                 email: 'notAdmin@example.com',
                 admin: false,
+                organizations: ['456'],
                 id: '456'
             }
         ]
