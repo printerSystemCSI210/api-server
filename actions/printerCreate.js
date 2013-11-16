@@ -6,7 +6,15 @@ exports.action = {
         required: [ 'name', 'organizationId' ],
         optional: [ 'location', 'manufacturer', 'model', 'ipAddress', 'serial' ]
     },
-    outputExample: {},
+    outputExample: {
+        name: 'My Color Printer',
+        id: '123',
+        location: 'Room 201',
+        manufacturer: 'Ricoh',
+        model: 'ABC123',
+        ipAddress: '192.168.100.20',
+        serial: '12345ABCDE'
+    },
     run: function (api, connection, next) {
         var id = api.mongoose.Types.ObjectId(connection.params.organizationId);
         var Printer = api.mongoose.model('Printer');

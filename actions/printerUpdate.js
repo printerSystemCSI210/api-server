@@ -6,7 +6,15 @@ exports.action = {
         required: [ 'printerId' ],
         optional: [ 'name', 'location', 'manufacturer', 'model', 'ipAddress', 'serial' ]
     },
-    outputExample: {},
+    outputExample: {
+        name: 'My Color Printer',
+        id: '123',
+        location: 'Different Room',
+        manufacturer: 'Ricoh',
+        model: 'ABC123',
+        ipAddress: '192.168.100.20',
+        serial: '12345ABCDE'
+    },
     run: function (api, connection, next) {
         
         // create the ID

@@ -10,7 +10,8 @@ exports.action = {
         name: 'Example Admin',
         email: 'example@example.com',
         admin: true,
-        id: '123'
+        organizations: ['527d0d8ab04e690200000002'],
+        id: '5287d29d96b09e0200000005'
     },
     run: function (api, connection, next) {
         // create the ID

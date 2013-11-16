@@ -6,7 +6,13 @@ exports.action = {
         required: [ 'name', 'organizationId',  'email', 'password', 'admin' ],
         optional: []
     },
-    outputExample: {},
+    outputExample: {
+        name: 'New Admin',
+        email: 'new.example@example.com',
+        admin: true,
+        organizations: ['527d0d8ab04e690200000002'],
+        id: '5287d29d96b09e0200000005'
+    },
     run: function (api, connection, next) {
         var id = api.mongoose.Types.ObjectId(connection.params.organizationId);
         var User = api.mongoose.model('User');

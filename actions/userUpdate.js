@@ -4,9 +4,15 @@ exports.action = {
     version: 1,
     inputs: {
         required: [ 'userId' ],
-        optional: [ 'name', 'email', 'password', 'admin' ]
+        optional: [ 'name', 'email', 'password', 'admin', 'organizationId' ]
     },
-    outputExample: {},
+    outputExample: {
+        name: 'Changed Admin',
+        email: 'example@example.com',
+        admin: true,
+        organizations: ['527d0d8ab04e690200000002'],
+        id: '5287d29d96b09e0200000005'
+    },
     run: function (api, connection, next) {
         
         // create the ID
