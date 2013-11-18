@@ -33,6 +33,7 @@ exports.action = {
                         name: r.name,
                         email: r.email,
                         admin: r.admin,
+                        organizations: r.organizations,
                         id: r._id
                     });
                 });
