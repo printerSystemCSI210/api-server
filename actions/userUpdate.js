@@ -27,11 +27,27 @@ exports.action = {
                 }
 
                 if (connection.params.email) {
-                    res.email = connection.params.email;
+                    api.mongoose.model('User').findOne({email: connection.params.email}, function (err, foundUser) {
+                        //Just in case the user is updating to the same email
+                        if(foundUser && id !=== foundUser._id)
+                        {
+                            //Error because there is a duplicate email
+                            connection.error = "A User with email '" + connection.params.email + "' already exists.";
+                            next(connection, true);
+                        }
+                        res.email = connection.params.email;
+                    });
                 }
 
                 if (connection.params.password) {
-                    res.password = connection.params.password;
+                    var bcrypt = require('bcrypt');
+                    var hashedPass = "";
+                    bcrypt.genSalt(10, function(err, salt) {
+                        bcrypt.hash(connection.params.password, salt, function(err, hash) {
+                            hashedPass = hash;
+                        });
+                    });
+                    res.password = hashedPass;
                 }
 
                 //Some check may be needed to ensure any user can't change admin status

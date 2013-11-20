@@ -20,6 +20,15 @@ exports.action = {
             if (res) {
                 
                 if (connection.params.name) {
+                    api.mongoose.model('Organization').findOne({name: connection.params.name}, function (err, foundOrg) {
+                        //Just in case the User is updating to the same email
+                        if(foundOrg && id !=== foundOrg._id)
+                        {
+                            //Error: Duplicate organization name
+                            connection.error = "An Organization with name '" + connection.params.name + "' already exists.";
+                            next(connection, true);
+                        }
+                    });
                     res.name = connection.params.name;
                 }
 

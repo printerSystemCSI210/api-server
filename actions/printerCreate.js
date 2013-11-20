@@ -19,6 +19,15 @@ exports.action = {
         var id = api.mongoose.Types.ObjectId(connection.params.organizationId);
         var Printer = api.mongoose.model('Printer');
 
+        api.mongoose.model('Printer').findOne({ipAddress: connection.params.ipAddress}, function (err, res) {
+            if(res)
+            {
+                //Error: a Printer with this IP address already exists
+                connection.error = "A Printer with IP address '" + connection.params.ipAddress + "' already exists.";
+                next(connection, true);
+            }
+        });
+
         var newPrinter = new Printer({
             name: connection.params.name,
             location: connection.params.location,

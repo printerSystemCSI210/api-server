@@ -17,10 +17,29 @@ exports.action = {
         var id = api.mongoose.Types.ObjectId(connection.params.organizationId);
         var User = api.mongoose.model('User');
 
+        //encrypt password using bcrypt
+        var bcrypt = require('bcrypt');
+        var hashedPass = "";
+        bcrypt.genSalt(10, function(err, salt) {
+            bcrypt.hash(connection.params.password, salt, function(err, hash) {
+                hashedPass = hash;
+            });
+        });
+
+        //Check that given email is not used by another email
+        api.mongoose.model('User').findOne({email: connection.params.email}, function (err, foundUser) {
+            if(foundUser)
+            {
+                //Error because there is a duplicate email
+                connection.error = "A User with email '" + connection.params.email + "' already exists.";
+                next(connection, true);
+            }
+        });
+
         new User({
             name: connection.params.name,
             email: connection.params.email,
-            password: connection.params.password,
+            password: hashedPass,
             admin: (connection.params.admin === "true") ? true : false
         }).save(function (err, user) {
             api.mongoose.model('User').findByIdAndUpdate(user._id, {
