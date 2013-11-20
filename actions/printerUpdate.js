@@ -48,6 +48,7 @@ exports.action = {
                             //Error: a Printer with this IP address already exists
                             connection.error = "A Printer with IP address '" + connection.params.ipAddress + "' already exists.";
                             next(connection, true);
+                            return;
                         }
                     });
                     res.ipAddress = connection.params.ipAddress;

@@ -34,6 +34,7 @@ exports.action = {
                             //Error because there is a duplicate email
                             connection.error = "A User with email '" + connection.params.email + "' already exists.";
                             next(connection, true);
+                            return;
                         }
                         res.email = connection.params.email;
                     });
@@ -55,7 +56,7 @@ exports.action = {
                     res.admin = connection.params.admin === "true" ? true : false;
                 }
 
-                res.save(function (res, user){
+                res.save(function (err, user){
                     if(user)
                     {
                         connection.response.name = user.name;

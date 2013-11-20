@@ -33,6 +33,7 @@ exports.action = {
                 //Error because there is a duplicate email
                 connection.error = "A User with email '" + connection.params.email + "' already exists.";
                 next(connection, true);
+                return;
             }
         });
 

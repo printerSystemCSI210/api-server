@@ -19,6 +19,7 @@ exports.action = {
                 //Error: Duplicate organization name
                 connection.error = "An Organization with name '" + connection.params.name + "' already exists.";
                 next(connection, true);
+                return;
             }
         });
 
