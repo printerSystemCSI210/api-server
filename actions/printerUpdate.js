@@ -43,7 +43,7 @@ exports.action = {
                 if (connection.params.ipAddress) {
 
                     api.mongoose.model('Printer').findOne({ipAddress: connection.params.ipAddress}, function (err, foundPrinter) {
-                        if(foundPrinter && id !=== foundPrinter._id)
+                        if(foundPrinter && id !== foundPrinter._id)
                         {
                             //Error: a Printer with this IP address already exists
                             connection.error = "A Printer with IP address '" + connection.params.ipAddress + "' already exists.";

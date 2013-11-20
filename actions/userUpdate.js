@@ -29,7 +29,7 @@ exports.action = {
                 if (connection.params.email) {
                     api.mongoose.model('User').findOne({email: connection.params.email}, function (err, foundUser) {
                         //Just in case the user is updating to the same email
-                        if(foundUser && id !=== foundUser._id)
+                        if(foundUser && id !== foundUser._id)
                         {
                             //Error because there is a duplicate email
                             connection.error = "A User with email '" + connection.params.email + "' already exists.";
