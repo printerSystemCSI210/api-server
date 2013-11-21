@@ -19,6 +19,7 @@ exports.action = {
         
         // create the ID
         var id = api.ObjectId(connection.params.printerId);
+        var duplicate = false;
         
         // make the query
         api.mongoose.model('Printer').findOne({ _id: id }, function (err, res) {
@@ -47,30 +48,36 @@ exports.action = {
                         {
                             //Error: a Printer with this IP address already exists
                             connection.error = "A Printer with IP address '" + connection.params.ipAddress + "' already exists.";
+                            duplicate = true;
                             next(connection, true);
-                            return;
+                        }
+                        else
+                        {
+                            res.ipAddress = connection.params.ipAddress;
                         }
                     });
-                    res.ipAddress = connection.params.ipAddress;
                 }
 
                 if (connection.params.serial) {
                     res.serial = connection.params.serial;
                 }
 
-                res.save(function (err, printer){
-                    if(printer)
-                    {
-                        connection.response.name = printer.name;
-                        connection.response.location = printer.location;
-                        connection.response.manufacturer = printer.manufacturer;
-                        connection.response.model = printer.model;
-                        connection.response.ipAddress = printer.ipAddress;
-                        connection.response.serial = printer.serial;
-                        connection.response.id = printer._id;
-                    }
-                    next(connection, true);
-                });
+                if(!duplicate)
+                {
+                    res.save(function (err, printer){
+                        if(printer)
+                        {
+                            connection.response.name = printer.name;
+                            connection.response.location = printer.location;
+                            connection.response.manufacturer = printer.manufacturer;
+                            connection.response.model = printer.model;
+                            connection.response.ipAddress = printer.ipAddress;
+                            connection.response.serial = printer.serial;
+                            connection.response.id = printer._id;
+                        }
+                        next(connection, true);
+                    });
+                }
             } else {
                 next(connection, true);
             }

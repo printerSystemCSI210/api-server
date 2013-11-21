@@ -22,24 +22,21 @@ exports.action = {
 					if(err)
 					{
 						connection.error = err;
-						next(connection, true);
-						return;
 					}
-					if(comp) {
+					else if(comp) {
 						//Valid user
 						connection.response.authenticated = true;
 						connection.response.name = res.name;
 						connection.response.email = res.email;
 						connection.response.organizations = res.organizations;
 						connection.response.id = res._id;
-						next(connection, true);
 					}
 					else {
 						//Incorrect email/password combo
 						connection.response.authenticated = false;
 						connection.error = "Incorrect Email/Password Combination";
-						next(connection, true);
 					}
+					next(connection, true);
 				});
 			}
 			else {

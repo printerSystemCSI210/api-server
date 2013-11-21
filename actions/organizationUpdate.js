@@ -14,6 +14,7 @@ exports.action = {
         
         // create the ID
         var id = api.ObjectId(connection.params.organizationId);
+        var duplicate = false;
         
         // make the query
         api.mongoose.model('Organization').findOne({ _id: id }, function (err, res) {
@@ -26,21 +27,27 @@ exports.action = {
                         {
                             //Error: Duplicate organization name
                             connection.error = "An Organization with name '" + connection.params.name + "' already exists.";
+                            duplicate = true;
                             next(connection, true);
-                            return;
+                        }
+                        else
+                        {
+                            res.name = connection.params.name;
                         }
                     });
-                    res.name = connection.params.name;
                 }
-
-                res.save(function (err, org){
-                    if(org)
-                    {
-                        connection.response.name = org.name;
-                        connection.response.id = org._id;
-                    }
-                    next(connection, true);
-                });
+                
+                if(!duplicate)
+                {
+                    res.save(function (err, org){
+                        if(org)
+                        {
+                            connection.response.name = org.name;
+                            connection.response.id = org._id;
+                        }
+                        next(connection, true);
+                    });
+                }
             } else {
                 next(connection, true);
             }

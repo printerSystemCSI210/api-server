@@ -21,6 +21,7 @@ exports.action = {
         // make the query
         api.mongoose.model('User').findOne({ _id: id }, function (err, res) {
             if (res) {
+                var duplicate = false;
                 
                 if (connection.params.name) {
                     res.name = connection.params.name;
@@ -33,20 +34,21 @@ exports.action = {
                         {
                             //Error because there is a duplicate email
                             connection.error = "A User with email '" + connection.params.email + "' already exists.";
+                            duplicate = true;
                             next(connection, true);
-                            return;
                         }
-                        res.email = connection.params.email;
+                        else
+                        {
+                            res.email = connection.params.email;
+                        }
                     });
                 }
 
                 if (connection.params.password) {
                     var bcrypt = require('bcrypt');
                     var hashedPass = "";
-                    bcrypt.genSalt(10, function(err, salt) {
-                        bcrypt.hash(connection.params.password, salt, function(err, hash) {
-                            hashedPass = hash;
-                        });
+                    bcrypt.hash(connection.params.password, 10, function(err, hash) {
+                        hashedPass = hash;
                     });
                     res.password = hashedPass;
                 }
@@ -55,18 +57,21 @@ exports.action = {
                 if (connection.params.admin) {
                     res.admin = connection.params.admin === "true" ? true : false;
                 }
-
-                res.save(function (err, user){
-                    if(user)
-                    {
-                        connection.response.name = user.name;
-                        connection.response.email = user.email;
-                        connection.response.admin = user.admin;
-                        connection.response.organizations = user.organizations;
-                        connection.response.id = user._id;
-                    }
-                    next(connection, true);
-                });
+                
+                if(!duplicate)
+                {
+                    res.save(function (err, user){
+                        if(user)
+                        {
+                            connection.response.name = user.name;
+                            connection.response.email = user.email;
+                            connection.response.admin = user.admin;
+                            connection.response.organizations = user.organizations;
+                            connection.response.id = user._id;
+                        }
+                        next(connection, true);
+                    });
+                }
             } else {
                 next(connection, true);
             }

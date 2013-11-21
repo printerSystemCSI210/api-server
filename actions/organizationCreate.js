@@ -12,26 +12,30 @@ exports.action = {
     },
     run: function (api, connection, next) {
         var Organization = api.mongoose.model('Organization');
+        var duplicate = false;
 
         api.mongoose.model('Organization').findOne({name: connection.params.name}, function (err, res) {
             if(res)
             {
                 //Error: Duplicate organization name
                 connection.error = "An Organization with name '" + connection.params.name + "' already exists.";
+                duplicate = true;
                 next(connection, true);
-                return;
             }
         });
 
-        new Organization({
-            name: connection.params.name
-        }).save(function (err, org) {
-            if(org)
-            {
-                connection.response.name = org.name;
-                connection.response.id = org._id;
-            }
-            next(connection, true);
-        });
+        if(!duplicate)
+        {
+            new Organization({
+                name: connection.params.name
+            }).save(function (err, org) {
+                if(org)
+                {
+                    connection.response.name = org.name;
+                    connection.response.id = org._id;
+                }
+                next(connection, true);
+            });
+        }
     }
 };
