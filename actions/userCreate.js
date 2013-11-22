@@ -16,50 +16,32 @@ exports.action = {
     run: function (api, connection, next) {
         var id = api.mongoose.Types.ObjectId(connection.params.organizationId);
         var User = api.mongoose.model('User');
-        var duplicate = false;
 
         //encrypt password using bcrypt
         var bcrypt = require('bcrypt');
-        var hashedPass = "";
-        bcrypt.hash(connection.params.password, 10, function (err, hash) {
-            hashedPass = hash;
-        });
+        var hashedPass = bcrypt.hashSync(connection.params.password, 10);
 
-        //Check that given email is not used by another email
-        api.mongoose.model('User').findOne({email: connection.params.email}, function (err, foundUser) {
-            if(foundUser)
+        new User({
+            name: connection.params.name,
+            email: connection.params.email,
+            password: hashedPass,
+            admin: (connection.params.admin === "true") ? true : false,
+            organizations: [connection.params.organizationId]
+        }).save(function (err, user) {
+            if(err)
             {
-                //Error because there is a duplicate email
-                connection.error = "A User with email '" + connection.params.email + "' already exists.";
-                duplicate = true;
-                next(connection, true);
+                connection.error = "A User with email '" + connection.params.email + "'already exists.";
+                connection.response.details = err;
             }
+            else if(user)
+            {
+                connection.response.name = user.name;
+                connection.response.email = user.email;
+                connection.response.admin = user.admin;
+                connection.response.organizations = user.organizations;
+                connection.response.id = user._id;
+            }
+            next(connection, true);
         });
-
-        if(!duplicate)
-        {
-            new User({
-                name: connection.params.name,
-                email: connection.params.email,
-                password: hashedPass,
-                admin: (connection.params.admin === "true") ? true : false
-            }).save(function (err, user) {
-                api.mongoose.model('User').findByIdAndUpdate(user._id, {
-                    $push: {
-                        organizations: id
-                    }
-                }, function (err, user) {
-                    if(user)
-                    {
-                        connection.response.name = user.name;
-                        connection.response.email = user.email;
-                        connection.response.admin = user.admin;
-                        connection.response.organizations = user.organizations;
-                        connection.response.id = user._id;
-                    }
-                    next(connection, true);
-                });
-            });
-        }
     }
 };

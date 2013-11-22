@@ -7,7 +7,7 @@ exports._project = function(api, next){
 
 
   var orgSchema = {
-      name: String,
+      name: {type: String, unique: true},
       printers: [ mongoose.Schema.Types.ObjectId ],
       public: Boolean
   };
@@ -15,7 +15,7 @@ exports._project = function(api, next){
   var printerSchema = {
       name: String,
       location: String,
-      ipAddress: String,
+      ipAddress: {type: String, unique: true},
       serial: String,
       statuses: [ {
         timeStamp: Date,
@@ -40,7 +40,7 @@ exports._project = function(api, next){
 
   var userSchema = {
       name: String,
-      email: String,
+      email: {type: String, unique: true},
       password: String,
       admin: Boolean,
       organizations: [ mongoose.Schema.Types.ObjectId ]

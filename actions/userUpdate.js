@@ -21,57 +21,41 @@ exports.action = {
         // make the query
         api.mongoose.model('User').findOne({ _id: id }, function (err, res) {
             if (res) {
-                var duplicate = false;
                 
                 if (connection.params.name) {
                     res.name = connection.params.name;
                 }
 
                 if (connection.params.email) {
-                    api.mongoose.model('User').findOne({email: connection.params.email}, function (err, foundUser) {
-                        //Just in case the user is updating to the same email
-                        if(foundUser && id !== foundUser._id)
-                        {
-                            //Error because there is a duplicate email
-                            connection.error = "A User with email '" + connection.params.email + "' already exists.";
-                            duplicate = true;
-                            next(connection, true);
-                        }
-                        else
-                        {
-                            res.email = connection.params.email;
-                        }
-                    });
+                    res.email = connection.params.email;
                 }
 
                 if (connection.params.password) {
                     var bcrypt = require('bcrypt');
-                    var hashedPass = "";
-                    bcrypt.hash(connection.params.password, 10, function(err, hash) {
-                        hashedPass = hash;
-                    });
+                    var hashedPass = bcrypt.hashSync(connection.params.password, 10);
                     res.password = hashedPass;
                 }
 
-                //Some check may be needed to ensure any user can't change admin status
                 if (connection.params.admin) {
                     res.admin = connection.params.admin === "true" ? true : false;
                 }
-                
-                if(!duplicate)
-                {
-                    res.save(function (err, user){
-                        if(user)
-                        {
-                            connection.response.name = user.name;
-                            connection.response.email = user.email;
-                            connection.response.admin = user.admin;
-                            connection.response.organizations = user.organizations;
-                            connection.response.id = user._id;
-                        }
-                        next(connection, true);
-                    });
-                }
+
+                res.save(function (err, user){
+                    if(err)
+                    {
+                        connection.error = "A User with email '" + connection.params.email + "' already exists.";
+                        connection.response.details = err;
+                    }
+                    else if(user)
+                    {
+                        connection.response.name = user.name;
+                        connection.response.email = user.email;
+                        connection.response.admin = user.admin;
+                        connection.response.organizations = user.organizations;
+                        connection.response.id = user._id;
+                    }
+                    next(connection, true);
+                });
             } else {
                 next(connection, true);
             }
