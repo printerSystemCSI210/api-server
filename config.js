@@ -108,7 +108,7 @@ configData.servers = {
     httpHeaders : {                      // Any additional headers you want actionHero to respond with
       'Access-Control-Allow-Origin' : '*',
       'Access-Control-Allow-Methods': 'PUT, GET, POST, DELETE, OPTIONS',
-      'Access-Control-Allow-Headers': 'Content-Type'
+      'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept'
     },    
     urlPathForActions : "api",           // Route that actions will be served from; secondary route against this route will be treated as actions, IE: /api/?action=test == /api/test/
     urlPathForFiles : "public",          // Route that static files will be served from; path (relitive to your project root) to server static content from
