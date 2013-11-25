@@ -3,8 +3,8 @@ exports.action = {
     description: 'Creates a Printer',
     version: 1,
     inputs: {
-        required: [ 'name', 'organizationId' ],
-        optional: [ 'location', 'manufacturer', 'model', 'ipAddress', 'serial' ]
+        required: [ 'name', 'organizationId', 'ipAddress' ],
+        optional: [ 'location', 'manufacturer', 'model', 'serial' ]
     },
     outputExample: {
         name: 'My Color Printer',
