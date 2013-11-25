@@ -15,7 +15,7 @@ exports._project = function(api, next){
   var printerSchema = {
       name: String,
       location: String,
-      ipAddress: {type: String, unique: true},
+      ipAddress: String,
       serial: String,
       statuses: [ {
         timeStamp: Date,
