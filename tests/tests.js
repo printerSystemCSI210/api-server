@@ -21,13 +21,22 @@ describe('Forest API Tests', function (){
     var testCompanyId = "";
 
     it("Create an Organization", function (done){
-      request.get(testUrl + "/organizationCreate?name=Test%20Company", function (err, response, body){
+      request.get(testUrl + "/organizationCreate?name=Test Company", function (err, response, body){
         body = JSON.parse(body);
         should.not.exist(body.error);
         should.exist(body.id);
         testCompanyId = body.id;
         done();
       });
+    });
+
+    it("Create a Duplicate Organization", function (done){
+      request.get(testUrl + "/organizationCreate?name=Test Company", function (err, response, body){
+        body = JSON.parse(body);
+        should.exist(body.error);
+        body.error.should.equal("An Organization with name 'Test Company' already exists.");
+        done();
+      })
     });
 
     it("Update an Organization", function (done){
@@ -37,6 +46,7 @@ describe('Forest API Tests', function (){
         body = JSON.parse(body);
         should.not.exist(body.error);
         should.exist(body.name);
+        should.exist(body.id);
         //id should not have changed
         testCompanyId.should.equal(body.id);
         //Name should have changed
@@ -60,6 +70,12 @@ describe('Forest API Tests', function (){
     var orgId = "";
     var userId = "";
 
+    //Test information:
+    var name = "Sample Name";
+    var email = "sample@test.com";
+    var password = "pass";
+    var newName = "Changed Name";
+
     before(function (done){
       request.get(testUrl + "/organizationCreate?name=User+Test", function (err, response, body){
         body = JSON.parse(body);
@@ -71,12 +87,10 @@ describe('Forest API Tests', function (){
     });
 
     it("Create a User", function (done){
-      var name = "Sample Name";
-      var email = "sample@test.com";
       request.get(testUrl + "/userCreate?organizationId=" + orgId +
                             "&name=" + name +
                             "&email=" + email +
-                            "&password=pass&admin=true", function (err, response, body){
+                            "&password=" + password + "&admin=true", function (err, response, body){
         body = JSON.parse(body);
         should.not.exist(body.error);
         name.should.equal(body.name);
@@ -89,14 +103,58 @@ describe('Forest API Tests', function (){
       });
     });
 
+    it("Create a Duplicate User", function (done){
+      request.get(testUrl + "/userCreate?name=Sample%20Name&email=" + email + 
+                            "&password=pass&admin=true&organizationId=" + orgId, function (err, response, body){
+        body = JSON.parse(body);
+        should.exist(body.error);
+        body.error.should.equal("A User with email '" + email + "'already exists.");
+        done();
+      })
+    });
+
     it("Update a User", function (done){
-      var newName = "Changed Name";
       request.get(testUrl + "/userUpdate?userId=" + userId +
                             "&name=" + newName, function (err, response, body){
         body = JSON.parse(body);
         should.not.exist(body.error);
         newName.should.equal(body.name);
         userId.should.equal(body.id);
+        done();
+      });
+    });
+
+    it("Authenticate Valid Credentials", function (done){
+      request.get(testUrl + "/authenticate?email=" + email +
+                            "&password=" + password, function (err, response, body){
+        body = JSON.parse(body);
+        should.not.exist(body.error);
+        should.exist(body.authenticated);
+        body.authenticated.should.be.true;
+        done();
+      });
+    });
+
+    it("Authenticate Invalid Password", function (done){
+      request.get(testUrl + "/authenticate?email=" + email +
+                            "&password=sdkfj", function (err, response, body){
+        body = JSON.parse(body);
+        should.exist(body.error);
+        body.error.should.equal("Incorrect Email/Password Combination");
+        should.exist(body.authenticated);
+        body.authenticated.should.be.false;
+        done();
+      });
+    });
+
+    it("Authenticate Invalid Email", function (done){
+      request.get(testUrl + "/authenticate?email=hey@email.com" +
+                            "&password=" + password, function (err, response, body){
+        body = JSON.parse(body);
+        should.exist(body.error);
+        body.error.should.equal("Given Email does not Exist");
+        should.exist(body.authenticated);
+        body.authenticated.should.be.false;
         done();
       });
     });
@@ -124,6 +182,7 @@ describe('Forest API Tests', function (){
 
     var orgId = "";
     var printerId = "";
+    var testIp = "192.130.168.198";
 
     before(function (done){
       request.get(testUrl + "/organizationCreate?name=User+Test", function (err, response, body){
@@ -138,14 +197,13 @@ describe('Forest API Tests', function (){
     it("Create a Printer", function (done){
       var name = "Test Printer";
       var location = "Test Location";
-      var ip = "192.130.168.198";
       var manufacturer = "HP";
       var model = "Testjet 3600";
       var serial = "3827271";
       request.get(testUrl + "/printerCreate?organizationId=" + orgId +
                             "&name=" + name +
                             "&location=" + location +
-                            "&ipAddress=" + ip +
+                            "&ipAddress=" + testIp +
                             "&manufacturer=" + manufacturer +
                             "&model=" + model +
                             "&serial=" + serial, function (err, response, body){
@@ -153,7 +211,7 @@ describe('Forest API Tests', function (){
         should.not.exist(body.error);
         name.should.equal(body.name);
         location.should.equal(body.location);
-        ip.should.equal(body.ipAddress);
+        testIp.should.equal(body.ipAddress);
         manufacturer.should.equal(body.manufacturer);
         model.should.equal(body.model);
         serial.should.equal(body.serial);
