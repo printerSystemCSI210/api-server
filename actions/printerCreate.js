@@ -19,12 +19,20 @@ exports.action = {
         var id = api.mongoose.Types.ObjectId(connection.params.organizationId);
         var Printer = api.mongoose.model('Printer');
 
+        var ipArray = connection.params.ipAddress.split('.');
+        for(var i=0; i<ipArray.length; i++)
+        {
+             var pad = '000';
+             ipArray[i] = pad.substring(0, pad.length - ipArray[i].length) + ipArray[i];
+        }
+        var paddedIP = ipArray.join('.');
+
         var newPrinter = new Printer({
             name: connection.params.name,
             location: connection.params.location,
             manufacturer: connection.params.manufacturer,
             model: connection.params.model,
-            ipAddress: connection.params.ipAddress,
+            ipAddress: paddedIP,
             serial: connection.params.serial
         }).save(function (err, printer) {
             if(err)

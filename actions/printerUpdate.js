@@ -41,7 +41,15 @@ exports.action = {
                 } 
                 
                 if (connection.params.ipAddress) {
-                    res.ipAddress = connection.params.ipAddress;
+                    //Pad the IP address so each part has 3 numbers
+                    var ipArray = connection.params.ipAddress.split('.');
+                    for(var i=0; i<ipArray.length; i++)
+                    {
+                         var pad = '000';
+                         ipArray[i] = pad.substring(0, pad.length - ipArray[i].length) + ipArray[i];
+                    }
+                    var paddedIP = ipArray.join('.');
+                    res.ipAddress = paddedIP;
                 }
 
                 if (connection.params.serial) {
