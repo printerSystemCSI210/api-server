@@ -34,6 +34,23 @@ exports._project = function(api, next){
           capacity: Number
         } ]
       } ],
+      status: {
+        timeStamp: Date,
+        message: String,
+        pageCount: Number,
+        consumables: [ {
+          name: String,
+          level: Number,
+          capacity: Number,
+          percentage: Number
+        } ],
+        trays: [ {
+          name: String,
+          xdim: Number,
+          ydim: Number,
+          capacity: Number
+        } ]
+      },
       manufacturer: String,
       model: String
   };

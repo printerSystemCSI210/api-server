@@ -13,7 +13,28 @@ exports.action = {
         manufacturer: 'Ricoh',
         model: 'ABC123',
         ipAddress: '192.168.100.20',
-        serial: '12345ABCDE'
+        serial: '12345ABCDE',
+        status: {
+            timeStamp: "2013-11-07T16:33:33.446Z",
+            pageCount: 1000,
+            message: 'Ready',
+            consumables: [
+                {
+                    name: "Black Cartridge",
+                    level: 12000,
+                    capacity: 24000,
+                    percentage: 0.5
+                }
+            ],
+            trays: [
+                {
+                    name: "Tray 1",
+                    xdim: 8.5,
+                    ydim: 11,
+                    capacity: 500
+                }
+            ]
+        }
     },
     run: function (api, connection, next) {
         
@@ -32,6 +53,7 @@ exports.action = {
                     connection.response.model = res.model;
                     connection.response.ipAddress = res.ipAddress;
                     connection.response.serial = res.serial;
+                    connection.response.status = res.status;
                     next(connection, true);
                 } else {
                     next(connection, true);

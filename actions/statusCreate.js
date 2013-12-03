@@ -21,6 +21,15 @@ exports.action = {
         }
         
         api.mongoose.model('Printer').findByIdAndUpdate(id, {
+            
+            status: {
+                message: connection.params.status,
+                pageCount: connection.params.pageCount,
+                timeStamp: new Date(),
+                trays: trays,
+                consumables: consumables
+            },
+
             $push: {
                 statuses: {
                     status: connection.params.status,
