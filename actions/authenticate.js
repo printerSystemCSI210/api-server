@@ -10,6 +10,7 @@ exports.action = {
 		authenticated: true,
 		name: "Example User",
 		email: "email@example.com",
+		admin: true,
 		organizations: ["456"],
 		id: "123"
 	},
@@ -24,6 +25,7 @@ exports.action = {
 					connection.response.authenticated = true;
 					connection.response.name = res.name;
 					connection.response.email = res.email;
+					connection.response.admin = res.admin;
 					connection.response.organizations = res.organizations;
 					connection.response.id = res._id;
 				}
