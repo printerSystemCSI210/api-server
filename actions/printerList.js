@@ -36,7 +36,8 @@ exports.action = {
                             manufacturer: r.manufacturer,
                             model: r.model,
                             ipAddress: r.ipAddress,
-                            serial: r.serial
+                            serial: r.serial,
+                            status: r.status
                         });
                     });
                 }
